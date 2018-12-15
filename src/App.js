@@ -77,7 +77,7 @@ class App extends Component {
               const search = data.search;
               const repositoryCount = search.repositoryCount;
               const repositoryUnit = repositoryCount === 1 ? 'Repository' : 'Repositories';
-              const title = `GitHUb Repositories Search Results - ${repositoryCount} ${repositoryUnit}`;
+              const title = `GitHub Repositories Search Results - ${repositoryCount} ${repositoryUnit}`;
               return (
                 <React.Fragment>
                   <h2>{title}</h2>
