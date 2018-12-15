@@ -4,8 +4,9 @@ import { Query } from 'react-apollo';
 import client from './client';
 import { SEARCH_REPOSITORIES} from "./graphql";
 
+const PER_PAGE = 5;
 const DEFAULT_STATE = {
-  first: 5,
+  first: PER_PAGE,
 	after: null,
   last: null,
   before: null,
@@ -30,6 +31,15 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+  };
+
+  goNext(search) {
+    this.setState({
+      first: PER_PAGE,
+      after: search.pageInfo.endCursor, // リストの最後尾のCursor
+      last: null,
+      before: null
+    })
   };
 
   render() {
@@ -68,6 +78,15 @@ class App extends Component {
                       })
                     }
                   </ul>
+                  {
+                    search.pageInfo.hasNextPage === true ?
+                      // ボタンにbindしないと引数searchが渡せない
+                      <button onClick={this.goNext.bind(this, search)}>
+                        Next
+                      </button>
+                      :
+                      null
+                  }
                 </React.Fragment>
               )
             }
