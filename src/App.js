@@ -33,6 +33,17 @@ class App extends Component {
     event.preventDefault();
   };
 
+  // 先頭の要素から5つ以前の要素を要求する
+  goPrevious(search) {
+    this.setState({
+      first: null,
+      after: null,
+      last: PER_PAGE,
+      before: search.pageInfo.startCursor // リストの1つ目のCursor
+    })
+  };
+
+  // 最後尾の要素から5つ後の要素を要求する
   goNext(search) {
     this.setState({
       first: PER_PAGE,
@@ -78,6 +89,15 @@ class App extends Component {
                       })
                     }
                   </ul>
+                  {
+                    search.pageInfo.hasPreviousPage === true ?
+                      // ボタンにbindしないと引数searchが渡せない
+                      <button onClick={this.goPrevious.bind(this, search)}>
+                        Previous
+                      </button>
+                      :
+                      null
+                  }
                   {
                     search.pageInfo.hasNextPage === true ?
                       // ボタンにbindしないと引数searchが渡せない
